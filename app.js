@@ -1,8 +1,9 @@
+const tokens = require('./musiqueTokens.json')
 const searchOpts = {
 	maxResults: 10,
-	key: 'AIzaSyDdZw1ZKxdpJ2tDhUnD4TyZoWQW2AkaqEA'
+	key: tokens["youtube-search"].token
 }
-const token = 'MzY2MjMzMjAwNTIwOTg2NjI1.XrsJTA._Swgu7Tj8V6JhaPndUpvxW-H-nM'
+const token = tokens["discord.js"].token
 const prefix = '!'
 
 const Discord = require('discord.js')
@@ -16,7 +17,6 @@ const ytdl = require('ytdl-core-discord')
 
 const AllHtmlEntities = require('html-entities').AllHtmlEntities
 const entities = new AllHtmlEntities();
-
 
 let queue = { songs: [], wasSkipped: false }
 
