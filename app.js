@@ -1,7 +1,8 @@
 const tokens = require('./musiqueTokens.json')
 const searchOpts = {
 	maxResults: 10,
-	key: tokens["youtube-search"].token
+	key: tokens["youtube-search"].token,
+	safeSearch: 'none'
 }
 const token = tokens["discord.js"].token
 const prefix = '!'
@@ -38,12 +39,17 @@ client.on('message', async message => {
 		case 'queue':
 			displayQueue(message.channel)
 			break;
-		// case 'delete':
-
-		// 	break;
+		case 'leave':
+			leave()
+			break;
 	}
 
 })
+
+function leave() {
+	if (queue.voiceChannel)
+		queue.voiceChannel.leave()
+}
 
 function isValidRequest(message) {
 	// if (message.author.bot) return false
@@ -101,6 +107,7 @@ async function parseMessage(content) {
 	}
 	else if (cmd == `${prefix}s` || cmd == `${prefix}skip`) return { command: 'skip' }
 	else if (cmd == `${prefix}q` || cmd == `${prefix}que` || cmd == `${prefix}queue`) return { command: 'queue' }
+	else if (cmd == `${prefix}l` || cmd == `${prefix}leave` || cmd == `${prefix}quit` || cmd == `${prefix}disconnect` || cmd == `${prefix}exit`) return { command: 'leave' }
 	// else if (command == `${prefix}d` || `${prefix}delete`) command = 'delete'
 	else return undefined
 }
@@ -154,7 +161,7 @@ async function play(song, textChannel, voiceChannel, playingFromQueue) {
 		queue.textChannel.send(str)
 	} catch (err) {
 		console.error(err)
-		return queue.textChannel.send('Internal error')
+		return queue.textChannel.send('Internal (╯°□°）╯︵ ┻━┻ error')
 	}
 }
 
